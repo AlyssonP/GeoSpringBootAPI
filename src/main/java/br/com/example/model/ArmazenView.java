@@ -4,11 +4,10 @@
  */
 package br.com.example.model;
 
-
+import com.vividsolutions.jts.geom.Geometry;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  *
@@ -16,9 +15,9 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 @Data
 @AllArgsConstructor
-public class EstadoView implements Serializable{
-    private String codigo;
-    private String nome;
-    private String sigla;
+public class ArmazenView implements Serializable{
+    private Integer codigo;
+    private String municipio;
+    private String siglaUf;
     private Geometry geometria;
 }

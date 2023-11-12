@@ -51,4 +51,9 @@ public class MunicipioController {
         return municipioRepository.municipiosFronteiraEstado(uf);
     }
     
+    @GetMapping("/municipios/{uf1}/fronteira_estados/{uf2}/{uf3}")
+    public List<MunicipioView> municipiosEstadoVizinhoDoisEstados(@PathVariable String uf1, @PathVariable String uf2, @PathVariable String uf3) {
+        return municipioRepository.municipiosEstadoVizinhoDoisEstados(uf1, uf2, uf3);
+    }
+    
 }

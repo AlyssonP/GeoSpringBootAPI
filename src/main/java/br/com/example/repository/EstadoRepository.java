@@ -17,14 +17,16 @@ import org.springframework.data.jpa.repository.Query;
 public interface EstadoRepository extends JpaRepository<Estado, Integer>{
     
     //@Query(value = "select new br.com.example.model.EstadoView(e.codigo, e.nome, e.sigla, e.geometria) from Estado e")
-    @Query(value = "select new br.com.example.model.EstadoView(e.codigo, e.nome, e.sigla) from Estado e")
+    @Query(value = "select new br.com.example.model.EstadoView(e.codigo, e.nome, e.sigla, e.geometria) from Estado e")
     List<EstadoView> listarEstados();
     
+    
     //@Query(value = "select new br.com.example.model.EstadoView(e.codigo, e.nome, e.sigla, e.geometria) from Estado e where e.nomeRegiao = :regiao")
-    @Query(value = "select new br.com.example.model.EstadoView(e.codigo, e.nome, e.sigla) from Estado e where e.nomeRegiao = :regiao")
+    @Query(value = "select new br.com.example.model.EstadoView(e.codigo, e.nome, e.sigla, e.geometria) from Estado e where e.nomeRegiao = :regiao")
     List<EstadoView> listarEstadosRegiao(String regiao);
     
-    @Query(value = "SELECT new br.com.example.model.EstadoView(e2.codigo, e2.nome, e2.sigla) FROM Estado e1\n" +
+    
+    @Query(value = "SELECT new br.com.example.model.EstadoView(e2.codigo, e2.nome, e2.sigla, e2.geometria) FROM Estado e1\n" +
                     "INNER JOIN Estado e2 ON touches(e1.geometria, e2.geometria) = true\n" +
                     "WHERE e1.sigla = :ufEstado")
     List<EstadoView> estadosVizinhos(String ufEstado);
