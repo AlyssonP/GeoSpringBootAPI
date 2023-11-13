@@ -21,6 +21,11 @@ public interface ArmazenRepository extends JpaRepository<Armazen, Integer>{
                     "WHERE uf.sigla = :uf")
     List<ArmazenView> armazensEstado(String uf);
     
+    @Query(value = "SELECT count(a.municipio) FROM Armazen a\n" +
+                    "INNER JOIN Estado uf ON st_within(a.geometria, uf.geometria) = true\n" +
+                    "WHERE uf.sigla = :uf")
+    public Integer quantidadeArmazensEstado(String uf);
+    
     
     @Query(value = "SELECT new br.com.example.model.ArmazenView(a.objectid, a.municipio, a.siglaUf, a.geometria) FROM Armazen a\n" +
                     "INNER JOIN Estado uf ON st_within(a.geometria, uf.geometria) = true\n" +

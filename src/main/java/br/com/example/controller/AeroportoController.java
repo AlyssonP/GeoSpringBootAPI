@@ -5,6 +5,7 @@
 package br.com.example.controller;
 
 import br.com.example.model.AeroportoView;
+import br.com.example.model.MunicipioView;
 import br.com.example.repository.AeroportoRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -45,5 +46,15 @@ public class AeroportoController {
     @GetMapping("/aeroportos_regiao/{regiao}")
     public List<AeroportoView> aeroportosRegiao(@PathVariable String regiao) {
         return aeroportoRepository.aeroportosRegiao(regiao);
+    }
+    
+    @GetMapping("/municipios_aeroportos_regiao/{regiao}")
+    public List<MunicipioView> municipiosAeroportoRegiao(@PathVariable String regiao) {
+        return aeroportoRepository.municipiosAeroportoRegiao(regiao);
+    }
+    
+    @GetMapping("/aeroportos/quantidade_estado/{uf}")
+    public Integer quantidadeAeroportosEstado(@PathVariable String uf) {
+        return aeroportoRepository.quantidadeAeroportosEstado(uf);
     }
 }

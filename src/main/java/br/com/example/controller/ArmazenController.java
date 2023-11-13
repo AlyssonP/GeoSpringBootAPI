@@ -37,6 +37,12 @@ public class ArmazenController {
         return armazenRepository.armazensEstado(uf);
     }
     
+    
+    @GetMapping("/armazen_estado/quantidade/{uf}")
+    public Integer quantidadeArmazensEstado(@PathVariable String uf) {
+        return armazenRepository.quantidadeArmazensEstado(uf);
+    }
+    
     @GetMapping("/armazen_regiao/{regiao}")
     public List<ArmazenView> armazensRegiao(@PathVariable String regiao) {
         return armazenRepository.armazensRegiao(regiao);
