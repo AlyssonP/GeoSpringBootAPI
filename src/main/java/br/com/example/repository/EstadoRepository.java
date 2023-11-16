@@ -32,5 +32,9 @@ public interface EstadoRepository extends JpaRepository<Estado, Integer>{
     List<EstadoView> estadosVizinhos(String ufEstado);
     
     
+    @Query(value = "SELECT distance(geography(uf1.geometria), geography(uf2.geometria)) FROM Estado uf1, Estado uf2\n" +
+                    "WHERE uf1.sigla = :ufA AND uf2.sigla = :ufB")
+    public Double distanciaEstados(String ufA, String ufB);
+    
     
 }

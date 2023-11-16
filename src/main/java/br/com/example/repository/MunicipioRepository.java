@@ -31,6 +31,12 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
     List<MunicipioView> municipiosEstado(String uf_estado);
     
     
+    @Query(value = "SELECT count(m.geometria) FROM Municipio m\n" +
+                    "INNER JOIN Estado uf ON st_within(m.geometria, uf.geometria) = true\n" +
+                    "WHERE uf.sigla = :uf")
+    public Integer quantidadeMunicipiosEstado(String uf);
+    
+    
     @Query(value = "SELECT new br.com.example.model.MunicipioView(m.codigo, m.nome, m.sigla, m.geometria) FROM Municipio m\n" +
                     "INNER JOIN Estado uf ON within(m.geometria, uf.geometria) = true\n" + 
                     "WHERE uf.sigla = :uf_estadoA AND touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf_estadoB)) = true")

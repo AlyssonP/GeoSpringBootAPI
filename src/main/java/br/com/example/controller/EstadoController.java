@@ -41,4 +41,9 @@ public class EstadoController {
     public List<EstadoView> estadosVizinhos(@PathVariable String uf) {
         return estadoRepository.estadosVizinhos(uf);
     }
+    
+    @GetMapping("/distancia_estados/{ufA}/{ufB}")
+    public Double distanciaEstados(@PathVariable String ufA, @PathVariable String ufB) {
+        return estadoRepository.distanciaEstados(ufA, ufB);
+    }
 }

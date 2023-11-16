@@ -26,7 +26,7 @@ public class MunicipioController {
     }
    
     @GetMapping("/distancia_entre_municipios/{municipioA}/{municipioB}")
-     public Double distanciaEntreMunicipios(@PathVariable String municipioA, @PathVariable String municipioB){
+    public Double distanciaEntreMunicipios(@PathVariable String municipioA, @PathVariable String municipioB){
         double result = municipioRepository.distanciaEntreMunicipios(municipioA, municipioB);
         return result;
     }
@@ -34,6 +34,11 @@ public class MunicipioController {
     @GetMapping("/municipios_estado/{uf_estado}")
     public List<MunicipioView> municipiosEstado(@PathVariable String uf_estado) {
         return municipioRepository.municipiosEstado(uf_estado);
+    }
+    
+    @GetMapping("/quantidade_municipios_estado/{uf}")
+    public Integer quantidadeMunicipiosEstado(@PathVariable String uf) {
+        return municipioRepository.quantidadeMunicipiosEstado(uf);
     }
      
     @GetMapping("/municipio_frontreira_entre_estados/{uf_estadoA}/{uf_estadoB}")
