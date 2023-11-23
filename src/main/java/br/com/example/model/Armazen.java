@@ -28,7 +28,7 @@ public class Armazen implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gid;
-    @Column(name = "objectid_1")
+    @Column(name = "objectid")
     private Integer objectid;
     @Column(name = "uf")
     private String siglaUf;
