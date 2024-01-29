@@ -30,13 +30,13 @@ public class EstadoController {
     @Autowired
     private EstadoRepository estadoRepository;
     
-    private EstadoDTO estadoViewTable(EstadoView estadoView) {
+    private EstadoDTO estadoViewSemGeometry(EstadoView estadoView) {
         return new EstadoDTO(
                 estadoView.getCodigo(),
                 estadoView.getNome(),
                 estadoView.getSigla());
     }
-    private EstadoDTO estadoViewMap(EstadoView estadoView) {
+    private EstadoDTO estadoViewComGeometry(EstadoView estadoView) {
         return new EstadoDTO(
                 estadoView.getCodigo(),
                 estadoView.getNome(),
@@ -47,15 +47,15 @@ public class EstadoController {
     
     @GetMapping("/estados")
     public List<EstadoDTO> listarEstados(
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility){
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry){
         
         List<EstadoDTO> response = new ArrayList<>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             estadoRepository.listarEstados()
-                    .forEach(estado -> response.add(estadoViewTable(estado)));
+                    .forEach(estado -> response.add(estadoViewComGeometry(estado)));
         } else {
              estadoRepository.listarEstados()
-                    .forEach(estado -> response.add(estadoViewMap(estado)));
+                    .forEach(estado -> response.add(estadoViewSemGeometry(estado)));
         }
         return response;
     }
@@ -64,14 +64,14 @@ public class EstadoController {
     @GetMapping("/estados_regiao/{regiao}")
     public List<EstadoDTO> listarEstadosRegiao(
             @PathVariable String regiao,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility) {
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
         List<EstadoDTO> response = new ArrayList<>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             estadoRepository.listarEstadosRegiao(regiao)
-                    .forEach(estado -> response.add(estadoViewTable(estado)));
+                    .forEach(estado -> response.add(estadoViewComGeometry(estado)));
         } else {
              estadoRepository.listarEstadosRegiao(regiao)
-                    .forEach(estado -> response.add(estadoViewMap(estado)));
+                    .forEach(estado -> response.add(estadoViewSemGeometry(estado)));
         }
         return response;
     }
@@ -80,14 +80,14 @@ public class EstadoController {
     @GetMapping("/estados_vizinhos/{uf}")
     public List<EstadoDTO> estadosVizinhos(
             @PathVariable String uf,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility) {
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
         List<EstadoDTO> response = new ArrayList<>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             estadoRepository.estadosVizinhos(uf)
-                    .forEach(estado -> response.add(estadoViewTable(estado)));
+                    .forEach(estado -> response.add(estadoViewComGeometry(estado)));
         } else {
              estadoRepository.estadosVizinhos(uf)
-                    .forEach(estado -> response.add(estadoViewMap(estado)));
+                    .forEach(estado -> response.add(estadoViewSemGeometry(estado)));
         }
         return response;
     }
