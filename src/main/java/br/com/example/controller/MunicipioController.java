@@ -24,13 +24,13 @@ public class MunicipioController {
     private MunicipioRepository municipioRepository;
 
     // Formas de visualização dos dados 
-    private MunicipioDTO municipioViewTable(MunicipioView municipioView) {
+    private MunicipioDTO municipioViewSemGeometry(MunicipioView municipioView) {
         return new MunicipioDTO(
                         municipioView.getCodigo(), 
                         municipioView.getNome(), 
                         municipioView.getUf());
     }
-    private MunicipioDTO municipioViewMap(MunicipioView municipioView) {
+    private MunicipioDTO municipioViewComGeometry(MunicipioView municipioView) {
         return new MunicipioDTO(
                             municipioView.getCodigo(), 
                             municipioView.getNome(), 
@@ -42,16 +42,16 @@ public class MunicipioController {
     @GetMapping("/municipios_vizinhos/{nome}")
     public List<MunicipioDTO> municipiosVizinhos(
             @PathVariable String nome,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility){
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry){
         
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             municipioRepository.listarMunicipiosVizinhos(nome)
-                    .forEach(municipio -> response.add(municipioViewTable(municipio)));
+                    .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
             
         } else {
             municipioRepository.listarMunicipiosVizinhos(nome)
-                    .forEach(municipio -> response.add(municipioViewMap(municipio)));
+                    .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
       
         return response;
@@ -68,14 +68,14 @@ public class MunicipioController {
     @GetMapping("/municipios_estado/{uf_estado}")
     public List<MunicipioDTO> municipiosEstado(
             @PathVariable String uf_estado,
-            @RequestParam(value = "visibility", defaultValue = "table") String visibility){
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry){
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             municipioRepository.municipiosEstado(uf_estado)
-                    .forEach(municipio -> response.add(municipioViewTable(municipio)));
+                    .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
         } else {
             municipioRepository.municipiosEstado(uf_estado)
-                    .forEach(municipio -> response.add(municipioViewMap(municipio)));
+                    .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
         
         return response;
@@ -92,15 +92,15 @@ public class MunicipioController {
     public List<MunicipioDTO> municipiosFronteirEntreEstados(
             @PathVariable String uf_estadoA, 
             @PathVariable String uf_estadoB,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility) {
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
         
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             municipioRepository.municipiosFronteiraEntreEstados(uf_estadoA, uf_estadoB)
-                    .forEach(municipio -> response.add(municipioViewTable(municipio)));
+                    .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
         } else {
             municipioRepository.municipiosFronteiraEntreEstados(uf_estadoA, uf_estadoB)
-                    .forEach(municipio -> response.add(municipioViewMap(municipio)));
+                    .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
         return response;
     }
@@ -110,14 +110,14 @@ public class MunicipioController {
     public List<MunicipioDTO> municipiosRaioKm(
             @PathVariable String nomeMunicipio, 
             @PathVariable int distancia,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility) {
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             municipioRepository.municipiosRaioKm(nomeMunicipio, distancia*1000)
-                    .forEach(municipio -> response.add(municipioViewTable(municipio)));
+                    .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
         } else {
             municipioRepository.municipiosRaioKm(nomeMunicipio, distancia*1000)
-                    .forEach(municipio -> response.add(municipioViewMap(municipio)));
+                    .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
         return response;
     }
@@ -126,14 +126,14 @@ public class MunicipioController {
     @GetMapping("/municipios_fronteira_estado/{uf}")
     public List<MunicipioDTO> municipiosFronteiraEstado(
             @PathVariable String uf,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility) {
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             municipioRepository.municipiosFronteiraEstado(uf)
-                    .forEach(municipio -> response.add(municipioViewTable(municipio)));
+                    .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
         } else {
             municipioRepository.municipiosFronteiraEstado(uf)
-                    .forEach(municipio -> response.add(municipioViewMap(municipio)));
+                    .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
         return response;
     }
@@ -144,14 +144,14 @@ public class MunicipioController {
             @PathVariable String uf1, 
             @PathVariable String uf2, 
             @PathVariable String uf3,
-            @RequestParam(value = "visibility", defaultValue = "map") String visibility) {
+            @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
-        if(visibility.equals("table")) {
+        if(geometry) {
             municipioRepository.municipiosEstadoVizinhoDoisEstados(uf1, uf2, uf3)
-                    .forEach(municipio -> response.add(municipioViewTable(municipio)));
+                    .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
         } else {
             municipioRepository.municipiosEstadoVizinhoDoisEstados(uf1, uf2, uf3)
-                    .forEach(municipio -> response.add(municipioViewMap(municipio)));
+                    .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
         return response;
     }
