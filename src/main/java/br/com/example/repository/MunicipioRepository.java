@@ -5,10 +5,8 @@
 package br.com.example.repository;
 
 import br.com.example.model.Municipio;
-import br.com.example.model.Estado;
 import br.com.example.model.MunicipioView;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,7 +16,8 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
     
-    @Query(value = "select new br.com.example.model.MunicipioView(mb.codigo, mb.nome, mb.sigla, mb.geometria) from Municipio ma, Municipio mb where touches(ma.geometria, mb.geometria) = true and ma.nome = :nome")
+    @Query(value = "select new br.com.example.model.MunicipioView(m2.codigo, m2.nome, m2.sigla, m2.geometria) "
+            + "from Municipio m1, Municipio m2 where touches(m2.geometria, m1.geometria) = true and m1.nome = :nome ORDER BY m2.nome")
     List<MunicipioView> listarMunicipiosVizinhos(String nome);
     
     
@@ -27,7 +26,7 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
     
     
     @Query(value = "SELECT new br.com.example.model.MunicipioView(m.codigo, m.nome, m.sigla, m.geometria) FROM Municipio m, Estado e\n"+
-                    "WHERE e.sigla = :uf_estado AND within(m.geometria, e.geometria) = true")
+                    "WHERE e.sigla = :uf_estado AND within(m.geometria, e.geometria) = true ORDER BY m.nome")
     List<MunicipioView> municipiosEstado(String uf_estado);
     
     
@@ -39,7 +38,7 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
     
     @Query(value = "SELECT new br.com.example.model.MunicipioView(m.codigo, m.nome, m.sigla, m.geometria) FROM Municipio m\n" +
                     "INNER JOIN Estado uf ON within(m.geometria, uf.geometria) = true\n" + 
-                    "WHERE uf.sigla = :uf_estadoA AND touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf_estadoB)) = true")
+                    "WHERE uf.sigla = :uf_estadoA AND touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf_estadoB)) = true ORDER BY m.nome")
     List<MunicipioView> municipiosFronteiraEntreEstados(String uf_estadoA, String uf_estadoB);
     
     
@@ -52,13 +51,13 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
     
     @Query(value = "SELECT new br.com.example.model.MunicipioView(m.codigo, m.nome, m.sigla, m.geometria) FROM Municipio m\n" +
                     "INNER JOIN Estado e ON st_touches(m.geometria, e.geometria) = true\n" +
-                    "WHERE e.sigla = :uf")
+                    "WHERE e.sigla = :uf ORDER BY m.nome")
     List<MunicipioView> municipiosFronteiraEstado(String uf);
     
     @Query(value = "SELECT new br.com.example.model.MunicipioView(m.codigo, m.nome, m.sigla, m.geometria) FROM Municipio m\n" +
                     "INNER JOIN Estado uf ON st_within(m.geometria, uf.geometria) = true\n" +
                     "WHERE uf.sigla = :uf1 \n" +
                     "and st_touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf2)) = true\n" +
-                    "and st_touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf3)) = true")
+                    "and st_touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf3)) = true ORDER BY m.nome")
     List<MunicipioView> municipiosEstadoVizinhoDoisEstados(String uf1, String uf2, String uf3);
 }
