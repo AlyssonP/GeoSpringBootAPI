@@ -37,4 +37,11 @@ public interface EstadoRepository extends JpaRepository<Estado, Integer>{
     public Double distanciaEstados(String ufA, String ufB);
     
     
+    @Query(value = "SELECT nomeRegiao FROM Estado GROUP BY nomeRegiao")
+    List<String> listarRegioes();
+    
+    
+    @Query(value = "SELECT sigla FROM Estado GROUP BY sigla")
+    List<String> listarUFs();
+    
 }

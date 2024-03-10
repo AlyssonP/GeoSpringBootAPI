@@ -39,7 +39,7 @@ public class MunicipioController {
     }
     
      
-    @GetMapping("/municipios_vizinhos/{nome}")
+    @GetMapping("/municipios/fronteira/{nome}")
     public List<MunicipioDTO> municipiosVizinhos(
             @PathVariable String nome,
             @RequestParam(value = "geometry", defaultValue = "false") boolean geometry){
@@ -65,16 +65,16 @@ public class MunicipioController {
     }
     
     
-    @GetMapping("/municipios_estado/{uf_estado}")
+    @GetMapping("/municipios/estado/{uf}")
     public List<MunicipioDTO> municipiosEstado(
-            @PathVariable String uf_estado,
+            @PathVariable String uf,
             @RequestParam(value = "geometry", defaultValue = "false") boolean geometry){
         List<MunicipioDTO> response = new ArrayList<MunicipioDTO>();
         if(geometry) {
-            municipioRepository.municipiosEstado(uf_estado)
+            municipioRepository.municipiosEstado(uf)
                     .forEach(municipio -> response.add(municipioViewComGeometry(municipio)));
         } else {
-            municipioRepository.municipiosEstado(uf_estado)
+            municipioRepository.municipiosEstado(uf)
                     .forEach(municipio -> response.add(municipioViewSemGeometry(municipio)));
         }
         
@@ -88,7 +88,7 @@ public class MunicipioController {
     }
     
     
-    @GetMapping("/municipio_frontreira_entre_estados/{uf_estadoA}/{uf_estadoB}")
+    @GetMapping("/municipios/fronteira/estados/{uf_estadoA}/entre/{uf_estadoB}")
     public List<MunicipioDTO> municipiosFronteirEntreEstados(
             @PathVariable String uf_estadoA, 
             @PathVariable String uf_estadoB,
@@ -106,7 +106,7 @@ public class MunicipioController {
     }
     
     
-    @GetMapping("/municipios_raio_km/{distancia}/{nomeMunicipio}")
+    @GetMapping("/municipios/raio_km/{distancia}/{nomeMunicipio}")
     public List<MunicipioDTO> municipiosRaioKm(
             @PathVariable String nomeMunicipio, 
             @PathVariable int distancia,
@@ -123,7 +123,7 @@ public class MunicipioController {
     }
     
     
-    @GetMapping("/municipios_fronteira_estado/{uf}")
+    @GetMapping("/municipios/fronteira/estado/{uf}")
     public List<MunicipioDTO> municipiosFronteiraEstado(
             @PathVariable String uf,
             @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {

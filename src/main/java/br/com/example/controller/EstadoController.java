@@ -61,7 +61,7 @@ public class EstadoController {
     }
     
     
-    @GetMapping("/estados_regiao/{regiao}")
+    @GetMapping("/estados/regiao/{regiao}")
     public List<EstadoDTO> listarEstadosRegiao(
             @PathVariable String regiao,
             @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
@@ -77,7 +77,7 @@ public class EstadoController {
     }
     
     
-    @GetMapping("/estados_vizinhos/{uf}")
+    @GetMapping("/estados/vizinhos/{uf}")
     public List<EstadoDTO> estadosVizinhos(
             @PathVariable String uf,
             @RequestParam(value = "geometry", defaultValue = "false") boolean geometry) {
@@ -93,8 +93,18 @@ public class EstadoController {
     }
     
     
-    @GetMapping("/distancia_estados/{ufA}/{ufB}")
+    @GetMapping("/estados/distancia/{ufA}/{ufB}")
     public Double distanciaEstados(@PathVariable String ufA, @PathVariable String ufB) {
         return estadoRepository.distanciaEstados(ufA, ufB);
+    }
+    
+    @GetMapping("/regioes")
+    public List<String> listarRegioes() {
+        return estadoRepository.listarRegioes();
+    }
+    
+    @GetMapping("/siglas_uf")
+    public List<String> listarUFs() {
+        return estadoRepository.listarUFs();
     }
 }
