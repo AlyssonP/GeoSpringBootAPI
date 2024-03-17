@@ -60,4 +60,8 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
                     "and st_touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf2)) = true\n" +
                     "and st_touches(m.geometria, (SELECT geometria FROM Estado WHERE sigla = :uf3)) = true ORDER BY m.nome")
     List<MunicipioView> municipiosEstadoVizinhoDoisEstados(String uf1, String uf2, String uf3);
+    
+    
+    @Query(value = "SELECT nome FROM Municipio WHERE sigla = :uf ORDER BY nome")
+    List<String> nomeMunicipiosEstudo(String uf);
 }

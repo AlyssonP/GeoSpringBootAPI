@@ -16,20 +16,20 @@ import lombok.Data;
 public class EstadoDTO implements Serializable{
     private String codigo;
     private String nome;
-    private String sigla;
+    private String uf;
     private Geometry geometria;
     
-    public EstadoDTO(String codigo, String nome, String sigla) {
+    public EstadoDTO(String codigo, String nome, String uf) {
         this.codigo = codigo;
         this.nome = nome;
-        this.sigla = sigla;
+        this.uf = uf;
         this.geometria = null;
     }
     
-    public EstadoDTO(String codigo, String nome, String sigla, Geometry geometria) {
+    public EstadoDTO(String codigo, String nome, String uf, Geometry geometria) {
         this.codigo = codigo;
         this.nome = nome;
-        this.sigla = sigla;
+        this.uf = uf;
         this.geometria = geometria;
     }
 }

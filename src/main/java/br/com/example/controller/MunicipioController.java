@@ -155,4 +155,9 @@ public class MunicipioController {
         }
         return response;
     }
+    
+    @GetMapping("/municipios/nome/estado/{uf}")
+    public List<String> nomeMunicipiosEstudo(@PathVariable String uf) {
+        return municipioRepository.nomeMunicipiosEstudo(uf);
+    }
 }
