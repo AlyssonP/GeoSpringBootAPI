@@ -1,8 +1,7 @@
 <h1 align="center">GeoSpringBootAPI</h2>
 
-<p>
-  <img src="./assets/img01.png![Uploading image.png…]()
-" alt="doc-api-geo-spring" width="400px"/>
+<p align="center">
+  <img src="./assets/img01.png" alt="doc-api-geo-spring" width="600px"/>
 </p>
 
 ## 📌 Sobre:
